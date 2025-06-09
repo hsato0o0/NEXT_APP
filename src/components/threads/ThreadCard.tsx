@@ -1,0 +1,31 @@
+import Link from 'next/link';
+
+export default function ThreadCard() {
+  return (
+    <>
+      <div
+        style={{
+          border: '1px solid black',
+          borderRadius: '6px',
+          margin: '0.5rem 2rem',
+          padding: '1rem 1rem 0.5rem 1rem',
+          fontSize: '0.75rem',
+        }}
+      >
+        <Link
+          href="/threads/cmbovqsib00019xav072e6ver"
+          style={{
+            color: 'red',
+            textDecoration: 'underline',
+          }}
+        >
+          テストテストテストテストテスト
+        </Link>
+        <div style={{ display: 'flex', justifyContent: 'end' }}>
+          <div style={{ marginRight: '2rem' }}>コメント数：0</div>
+          <div>作成日：2025/06/09</div>
+        </div>
+      </div>
+    </>
+  );
+}
