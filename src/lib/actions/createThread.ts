@@ -7,21 +7,22 @@ type ActionState = {
   errors: Record<string, string[]>;
 };
 
-export default async function postComment(
+export default async function createThread(
   prevState: ActionState,
   formData: FormData
 ): Promise<ActionState> {
   const name = formData.get('name') as string;
-  const comment = formData.get('comment') as string;
-  const id = formData.get('id') as string;
+  const title = formData.get('title') as string;
+  const content = formData.get('content') as string;
 
-  await prisma.comment.create({
+  await prisma.thread.create({
     data: {
-      threadId: id,
+      userId: '1',
       name: name,
-      comment: comment,
+      title: title,
+      content: content,
     },
   });
 
-  redirect(`/threads/${id}`);
+  redirect('/');
 }

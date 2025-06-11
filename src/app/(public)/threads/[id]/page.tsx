@@ -1,6 +1,6 @@
 import CommentCard from '@/components/threads/CommentCard';
 import CommentForm from '@/components/threads/CommentForm';
-import getComments from '@/lib/thread';
+import getComments, { getThread } from '@/lib/thread';
 import { notFound } from 'next/navigation';
 
 type Params = {
@@ -17,6 +17,8 @@ type Comment = {
 export default async function ThreadPage({ params }: Params) {
   const { id } = await params;
   const comments = await getComments(id);
+  const thread = await getThread(id);
+  console.log('コメント：', comments, thread);
 
   if (!comments) notFound();
 
@@ -48,11 +50,9 @@ export default async function ThreadPage({ params }: Params) {
               textAlign: 'center',
             }}
           >
-            テストテストテスト
+            {thread[0].title}
           </h2>
-          <h3 style={{ margin: '2rem 0' }}>
-            スレッドの具体的な内容が表示される
-          </h3>
+          <h3 style={{ margin: '2rem 0' }}>{thread[0].content}</h3>
           <div
             style={{
               borderTop: '1px solid gray',
@@ -61,7 +61,7 @@ export default async function ThreadPage({ params }: Params) {
               overflow: 'scroll',
             }}
           >
-            {comments.map((comment: Comment, index: string) => {
+            {comments.map((comment: Comment, index: number) => {
               return <CommentCard comment={comment} index={index} />;
             })}
           </div>

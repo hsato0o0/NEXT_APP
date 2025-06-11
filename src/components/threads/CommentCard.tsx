@@ -9,7 +9,7 @@ export default function CommentCard({
   index,
 }: {
   comment: Comment;
-  index: string;
+  index: number;
 }) {
   return (
     <>

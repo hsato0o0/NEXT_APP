@@ -1,6 +1,18 @@
 import Link from 'next/link';
 
-export default function ThreadCard() {
+export default function ThreadCard({
+  thread,
+  commentNum,
+}: {
+  thread: {
+    id: string;
+    title: string;
+    name: string;
+    content: string;
+    createdAt: Date;
+  };
+  commentNum: number;
+}) {
   return (
     <>
       <div
@@ -13,17 +25,17 @@ export default function ThreadCard() {
         }}
       >
         <Link
-          href="/threads/cmbovqsib00019xav072e6ver"
+          href={'/threads/' + thread.id}
           style={{
             color: 'red',
             textDecoration: 'underline',
           }}
         >
-          テストテストテストテストテスト
+          {thread.title}
         </Link>
         <div style={{ display: 'flex', justifyContent: 'end' }}>
-          <div style={{ marginRight: '2rem' }}>コメント数：0</div>
-          <div>作成日：2025/06/09</div>
+          <div style={{ marginRight: '2rem' }}>コメント数：{commentNum}</div>
+          <div>作成日：{thread.createdAt.toLocaleDateString()}</div>
         </div>
       </div>
     </>

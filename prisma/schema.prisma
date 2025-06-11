@@ -24,8 +24,9 @@ model User {
 
 model Thread {
   id String @id @default(cuid())
-  userId String
+  userId String @default("1")
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name String 
   title String
   content String
   comments Comment[]

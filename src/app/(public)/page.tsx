@@ -1,8 +1,15 @@
-import ThreadCard from '@/components/threads/ThreadCard';
+import CreateThreaButton from '@/components/threads/CreateThreadButton';
+import PublicThreads from '@/components/threads/PublicThreads';
 
-export default function ThreadsPage() {
+export default async function ThreadsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ search: string }>;
+}) {
+  const query = (await searchParams).search || '';
+
   return (
-    <>
+    <div className="modalField">
       <div
         style={{
           display: 'flex',
@@ -10,30 +17,9 @@ export default function ThreadsPage() {
           margin: '2rem 2rem 2rem 0',
         }}
       >
-        <button
-          style={{
-            border: 'none',
-            borderRadius: '12px',
-            padding: '8px 16px',
-            background: '#3B82F6',
-            color: 'white',
-          }}
-        >
-          ＋新規スレッド
-        </button>
+        <CreateThreaButton />
       </div>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{ width: '90%', maxWidth: '1000px' }}>
-          <ThreadCard />
-          <ThreadCard />
-        </div>
-      </div>
-    </>
+      <PublicThreads query={query} />
+    </div>
   );
 }

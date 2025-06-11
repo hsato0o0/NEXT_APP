@@ -10,7 +10,8 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Thread" (
     "id" TEXT NOT NULL PRIMARY KEY,
-    "userId" TEXT NOT NULL,
+    "userId" TEXT NOT NULL DEFAULT '1',
+    "name" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "content" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -22,6 +23,8 @@ CREATE TABLE "Thread" (
 CREATE TABLE "Comment" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "threadId" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "comment" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT "Comment_threadId_fkey" FOREIGN KEY ("threadId") REFERENCES "Thread" ("id") ON DELETE CASCADE ON UPDATE CASCADE
 );
