@@ -1,4 +1,16 @@
+'use client';
+import authenticate from '@/lib/actions/authenticate';
+import { useRouter } from 'next/navigation';
+import { useActionState, useEffect, useLayoutEffect } from 'react';
+
 export default function LoginForm() {
+  const [errorMessage, formAction] = useActionState(authenticate, '');
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    router.push('/user');
+  }, [errorMessage]);
+
   return (
     <>
       <div
@@ -27,7 +39,7 @@ export default function LoginForm() {
           >
             ログイン
           </h2>
-          <form action="">
+          <form action={formAction}>
             <div style={{ marginBottom: '1.5rem' }}>
               <label
                 htmlFor="email"
@@ -75,6 +87,7 @@ export default function LoginForm() {
                 }}
               />
             </div>
+            {errorMessage}
             <button
               type="submit"
               style={{

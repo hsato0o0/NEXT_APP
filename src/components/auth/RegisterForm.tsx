@@ -1,4 +1,14 @@
+'use client';
+
+import createUser from '@/lib/actions/createUser';
+import { useActionState } from 'react';
+
 export default function RegisterForm() {
+  const [errorMessage, formAction] = useActionState(createUser, {
+    success: false,
+    errors: {},
+  });
+
   return (
     <>
       <div
@@ -27,7 +37,7 @@ export default function RegisterForm() {
           >
             ユーザ登録
           </h2>
-          <form action="">
+          <form action={formAction}>
             <div style={{ marginBottom: '1rem' }}>
               <label
                 htmlFor="name"
