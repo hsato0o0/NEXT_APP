@@ -6,7 +6,7 @@ export default function CreateThreadModal({
 }: {
   handleCloseModal: () => void;
 }) {
-  const [state, formAction] = useActionState(createThread, {
+  const [errorMessage, formAction] = useActionState(createThread, {
     success: false,
     errors: {},
   });
@@ -54,7 +54,6 @@ export default function CreateThreadModal({
               id="name"
               name="name"
               type="text"
-              required
               style={{
                 border: '1px solid #D1D5DB',
                 borderRadius: '6px',
@@ -63,6 +62,11 @@ export default function CreateThreadModal({
                 padding: '5px',
               }}
             />
+            {errorMessage.errors.name && (
+              <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                {errorMessage.errors.name.join(', ')}
+              </p>
+            )}
           </div>
 
           <div style={{ marginBottom: '1rem' }}>
@@ -76,7 +80,6 @@ export default function CreateThreadModal({
               id="title"
               name="title"
               type="text"
-              required
               style={{
                 border: '1px solid #D1D5DB',
                 borderRadius: '6px',
@@ -85,6 +88,11 @@ export default function CreateThreadModal({
                 padding: '5px',
               }}
             />
+            {errorMessage.errors.title && (
+              <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                {errorMessage.errors.title.join(', ')}
+              </p>
+            )}
           </div>
 
           <div style={{ marginBottom: '1rem' }}>
@@ -97,7 +105,6 @@ export default function CreateThreadModal({
             <textarea
               id="content"
               name="content"
-              required
               style={{
                 border: '1px solid #D1D5DB',
                 borderRadius: '6px',
@@ -107,8 +114,12 @@ export default function CreateThreadModal({
                 height: '100px',
               }}
             />
+            {errorMessage.errors.content && (
+              <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                {errorMessage.errors.content.join(', ')}
+              </p>
+            )}
           </div>
-
           <div
             style={{
               marginTop: '2rem',

@@ -49,7 +49,6 @@ export default function RegisterForm() {
                 id="name"
                 type="text"
                 name="name"
-                required
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -57,6 +56,11 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
+              {errorMessage.errors.name && (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {errorMessage.errors.name.join(', ')}
+                </p>
+              )}
             </div>
             <div style={{ marginBottom: '1rem' }}>
               <label
@@ -69,7 +73,6 @@ export default function RegisterForm() {
                 id="email"
                 type="email"
                 name="email"
-                required
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -77,6 +80,11 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
+              {errorMessage.errors.email && (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {errorMessage.errors.email.join(', ')}
+                </p>
+              )}
             </div>
             <div style={{ marginBottom: '1rem' }}>
               <label
@@ -89,7 +97,6 @@ export default function RegisterForm() {
                 id="password"
                 type="password"
                 name="password"
-                required
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -97,6 +104,11 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
+              {errorMessage.errors.password && (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {errorMessage.errors.password.join(', ')}
+                </p>
+              )}
             </div>
             <div style={{ marginBottom: '2rem' }}>
               <label
@@ -109,7 +121,6 @@ export default function RegisterForm() {
                 id="confirmPassword"
                 type="password"
                 name="confirmPassword"
-                required
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -117,6 +128,11 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
+              {errorMessage.errors.confirmPassword && (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {errorMessage.errors.confirmPassword.join(', ')}
+                </p>
+              )}
             </div>
             <button
               type="submit"

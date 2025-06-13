@@ -3,6 +3,7 @@ import Link from 'next/link';
 export default function ThreadCard({
   thread,
   commentNum,
+  path,
 }: {
   thread: {
     id: string;
@@ -12,6 +13,7 @@ export default function ThreadCard({
     createdAt: Date;
   };
   commentNum: number;
+  path: string;
 }) {
   return (
     <>
@@ -25,7 +27,7 @@ export default function ThreadCard({
         }}
       >
         <Link
-          href={'/threads/' + thread.id}
+          href={`${path}` + thread.id}
           style={{
             color: 'red',
             textDecoration: 'underline',

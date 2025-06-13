@@ -1,8 +1,7 @@
+import LogoutBox from '../auth/LogoutBox';
 import SearchBox from '../threads/SearchBox';
-import LoginBox from '../auth/LoginBox';
-import RegisterBox from '../auth/RegisterBox';
 
-export default function PublicHeader() {
+export default function PrivateHeader() {
   return (
     <div
       style={{
@@ -20,9 +19,8 @@ export default function PublicHeader() {
     >
       <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>掲示板</div>
       <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-        <SearchBox path="" />
-        <LoginBox />
-        <RegisterBox />
+        <SearchBox path="user" />
+        <LogoutBox />
       </div>
     </div>
   );

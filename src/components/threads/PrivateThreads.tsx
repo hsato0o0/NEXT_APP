@@ -1,7 +1,7 @@
 import { getThreads, searchThread } from '@/lib/thread';
 import ThreadCard from './ThreadCard';
 
-export default async function PublicThreads({ query }: { query: string }) {
+export default async function PrivateThreads({ query }: { query: string }) {
   const threads = query ? await searchThread(query) : await getThreads();
 
   return (
@@ -21,7 +21,7 @@ export default async function PublicThreads({ query }: { query: string }) {
               <ThreadCard
                 thread={thread}
                 commentNum={commentNum}
-                path="/threads/"
+                path="/user/threads/"
               />
             );
           })}

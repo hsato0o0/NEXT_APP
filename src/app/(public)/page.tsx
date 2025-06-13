@@ -1,4 +1,5 @@
 import CreateThreaButton from '@/components/threads/CreateThreadButton';
+import PrivateThreads from '@/components/threads/PrivateThreads';
 import PublicThreads from '@/components/threads/PublicThreads';
 
 export default async function ThreadsPage({
@@ -16,9 +17,7 @@ export default async function ThreadsPage({
           justifyContent: 'end',
           margin: '2rem 2rem 2rem 0',
         }}
-      >
-        <CreateThreaButton />
-      </div>
+      ></div>
       <PublicThreads query={query} />
     </div>
   );

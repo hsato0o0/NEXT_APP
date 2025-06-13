@@ -12,6 +12,9 @@ async function getUser(email: string) {
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
   pages: { signIn: '/login' },
+  session: {
+    maxAge: 60 * 5,
+  },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;

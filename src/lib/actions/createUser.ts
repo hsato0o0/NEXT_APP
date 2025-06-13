@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { prisma } from '../prisma';
 import bcryptjs from 'bcryptjs';
 import { signIn } from '@/auth';
+import { registerSchema } from '@/validations/user';
 
 type ActionState = {
   success: boolean;
@@ -18,19 +19,27 @@ export default async function createUser(
   const password = formData.get('password') as string;
   const confirmPassword = formData.get('confirmPassword') as string;
 
-  if (password !== confirmPassword)
+  const validationResult = registerSchema.safeParse({
+    name,
+    email,
+    password,
+    confirmPassword,
+  });
+
+  if (!validationResult.success) {
+    const errors = validationResult.error.flatten().fieldErrors;
     return {
       success: false,
-      errors: {
-        email: ['passwordが一致しません'],
-      },
+      errors: errors,
     };
+  }
 
   const exisitingRecord = await prisma.user.findUnique({
     where: {
       email: email,
     },
   });
+
   if (exisitingRecord) {
     return {
       success: false,
