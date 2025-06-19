@@ -18,7 +18,6 @@ export default async function ThreadPage({ params }: Params) {
   const { id } = await params;
   const comments = await getComments(id);
   const thread = await getThread(id);
-  console.log('コメント：', comments, thread);
 
   if (!comments) notFound();
 
@@ -65,7 +64,7 @@ export default async function ThreadPage({ params }: Params) {
               return <CommentCard comment={comment} index={index} />;
             })}
           </div>
-          <CommentForm id={id} />
+          <CommentForm id={id} path="/user/threads/" />
         </div>
       </div>
     </>

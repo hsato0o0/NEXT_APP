@@ -2,7 +2,13 @@
 import { useActionState } from 'react';
 import postComment from '../../lib/actions/postComment';
 
-export default function CommentForm({ id }: { id: string }) {
+export default function CommentForm({
+  id,
+  path,
+}: {
+  id: string;
+  path: string;
+}) {
   const [state, formAction] = useActionState(postComment, {
     success: false,
     errors: {},
@@ -42,6 +48,7 @@ export default function CommentForm({ id }: { id: string }) {
             />
           </div>
           <input type="hidden" name="id" value={id} />
+          <input type="hidden" name="path" value={path} />
           <button
             style={{
               border: '1px solid black',

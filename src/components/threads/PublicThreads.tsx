@@ -3,7 +3,6 @@ import ThreadCard from './ThreadCard';
 
 export default async function PublicThreads({ query }: { query: string }) {
   const threads = query ? await searchThread(query) : await getThreads();
-
   return (
     <>
       <div
@@ -16,7 +15,7 @@ export default async function PublicThreads({ query }: { query: string }) {
         <div style={{ width: '90%', maxWidth: '1000px' }}>
           {threads.map((thread) => {
             const commentNum = thread.comments.length || 0;
-
+            console.log(thread);
             return (
               <ThreadCard
                 thread={thread}

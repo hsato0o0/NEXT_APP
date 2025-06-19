@@ -8,7 +8,7 @@ export default async function getComments(id: string) {
 
 export async function getThreads() {
   return await prisma.thread.findMany({
-    include: { comments: true },
+    include: { comments: true, user: true },
   });
 }
 
@@ -30,6 +30,6 @@ export async function searchThread(query: string) {
     where: {
       AND: filters,
     },
-    include: { comments: true },
+    include: { comments: true, user: true },
   });
 }

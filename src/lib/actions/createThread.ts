@@ -40,5 +40,5 @@ export default async function createThread(
     },
   });
 
-  redirect('/');
+  redirect('/user/');
 }

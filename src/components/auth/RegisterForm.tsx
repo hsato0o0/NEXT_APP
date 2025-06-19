@@ -1,13 +1,74 @@
 'use client';
 
 import createUser from '@/lib/actions/createUser';
-import { useActionState } from 'react';
+import { useActionState, useState } from 'react';
+import { z } from 'zod';
 
 export default function RegisterForm() {
   const [errorMessage, formAction] = useActionState(createUser, {
     success: false,
     errors: {},
   });
+
+  const [clientError, setClietnError] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    try {
+      if (name === 'name') {
+        z.object({
+          name: z
+            .string({ required_error: '名前は必須です' })
+            .min(1, '名前は必須です'),
+        }).parse({ name: value });
+      } else if (name === 'email') {
+        z.object({
+          email: z
+            .string({ required_error: 'メールアドレスは必須です' })
+            .min(1, 'メールアドレスは必須です')
+            .email('不正なメールアドレスです'),
+        }).parse({ email: value });
+      } else if (name === 'password') {
+        z.object({
+          password: z
+            .string({ required_error: 'パスワードは必須です' })
+            .min(1, 'パスワードは必須です')
+            .min(8, 'パスワードは最低8文字です')
+            .max(32, 'パスワードは最大32文字以内にしてください'),
+        }).parse({ password: value });
+      } else if (name === 'confirmPassword') {
+        z.object({
+          password: z
+            .string({ required_error: 'パスワードは必須です' })
+            .min(1, 'パスワードは必須です')
+            .min(8, 'パスワードは最低8文字です')
+            .max(32, 'パスワードは最大32文字以内にしてください'),
+          confirmPassword: z
+            .string({ required_error: '確認用パスワードは必須です' })
+            .min(1, '確認用パスワードは必須です'),
+        })
+          .refine((data) => data.password === data.confirmPassword, {
+            message: 'パスワードが一致しません',
+          })
+          .parse({ password: clientError.password, confirmPassword: value });
+
+        setClietnError((prev) => ({ ...prev, [name]: '' }));
+      }
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        setClietnError((prev) => ({
+          ...prev,
+          [name]: JSON.parse(error.message)[0].message,
+        }));
+      }
+    }
+  };
 
   return (
     <>
@@ -49,6 +110,7 @@ export default function RegisterForm() {
                 id="name"
                 type="text"
                 name="name"
+                onBlur={handleBlur}
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -56,9 +118,13 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
-              {errorMessage.errors.name && (
+              {errorMessage.errors.name ? (
                 <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
                   {errorMessage.errors.name.join(', ')}
+                </p>
+              ) : (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {clientError.name}
                 </p>
               )}
             </div>
@@ -73,6 +139,7 @@ export default function RegisterForm() {
                 id="email"
                 type="email"
                 name="email"
+                onBlur={handleBlur}
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -80,9 +147,13 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
-              {errorMessage.errors.email && (
+              {errorMessage.errors.email ? (
                 <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
                   {errorMessage.errors.email.join(', ')}
+                </p>
+              ) : (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {clientError.email}
                 </p>
               )}
             </div>
@@ -97,6 +168,7 @@ export default function RegisterForm() {
                 id="password"
                 type="password"
                 name="password"
+                onBlur={handleBlur}
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -104,9 +176,13 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
-              {errorMessage.errors.password && (
+              {errorMessage.errors.password ? (
                 <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
                   {errorMessage.errors.password.join(', ')}
+                </p>
+              ) : (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {clientError.password}
                 </p>
               )}
             </div>
@@ -121,6 +197,7 @@ export default function RegisterForm() {
                 id="confirmPassword"
                 type="password"
                 name="confirmPassword"
+                onBlur={handleBlur}
                 style={{
                   width: '100%',
                   border: '1px solid  #D1D5DB',
@@ -128,9 +205,13 @@ export default function RegisterForm() {
                   padding: '8px',
                 }}
               />
-              {errorMessage.errors.confirmPassword && (
+              {errorMessage.errors.confirmPassword ? (
                 <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
                   {errorMessage.errors.confirmPassword.join(', ')}
+                </p>
+              ) : (
+                <p style={{ fontSize: '12px', color: 'red', margin: '0.3rem' }}>
+                  {clientError.confirmPassword}
                 </p>
               )}
             </div>

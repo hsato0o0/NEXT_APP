@@ -14,6 +14,7 @@ export default async function postComment(
   const name = formData.get('name') as string;
   const comment = formData.get('comment') as string;
   const id = formData.get('id') as string;
+  const path = formData.get('path') as string;
 
   await prisma.comment.create({
     data: {
@@ -23,5 +24,5 @@ export default async function postComment(
     },
   });
 
-  redirect(`/threads/${id}`);
+  redirect(`${path}${id}`);
 }

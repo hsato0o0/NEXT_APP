@@ -9,6 +9,7 @@ export default function ThreadCard({
     id: string;
     title: string;
     name: string;
+    user: object;
     content: string;
     createdAt: Date;
   };
@@ -36,8 +37,13 @@ export default function ThreadCard({
           {thread.title}
         </Link>
         <div style={{ display: 'flex', justifyContent: 'end' }}>
-          <div style={{ marginRight: '2rem' }}>コメント数：{commentNum}</div>
-          <div>作成日：{thread.createdAt.toLocaleDateString()}</div>
+          <div style={{ marginRight: '1rem', fontSize: '9px' }}>
+            コメント数：{commentNum}
+          </div>
+          <div style={{ marginRight: '1rem', fontSize: '9px' }}>
+            作成日：{thread.createdAt.toLocaleDateString()}
+          </div>
+          {/* <div style={{ fontSize: '9px' }}>作成者：{thread.user?.name}</div> */}
         </div>
       </div>
     </>
