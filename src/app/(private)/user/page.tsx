@@ -1,5 +1,6 @@
 import CreateThreaButton from '@/components/threads/CreateThreadButton';
 import PrivateThreads from '@/components/threads/PrivateThreads';
+import { getThreads, searchThread } from '@/lib/thread';
 
 export default async function PrivateThreadsPage({
   searchParams,
@@ -7,6 +8,7 @@ export default async function PrivateThreadsPage({
   searchParams: Promise<{ search: string }>;
 }) {
   const query = (await searchParams).search || '';
+  const threads = query ? await searchThread(query) : await getThreads();
 
   return (
     <div className="modalField">
@@ -19,7 +21,7 @@ export default async function PrivateThreadsPage({
       >
         <CreateThreaButton />
       </div>
-      <PrivateThreads query={query} />
+      <PrivateThreads threads={threads} />
     </div>
   );
 }
