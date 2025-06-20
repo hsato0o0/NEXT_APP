@@ -1,3 +1,5 @@
+import { format } from 'date-fns';
+
 type Comment = {
   name: string;
   comment: string;
@@ -15,7 +17,8 @@ export default function CommentCard({
     <>
       <div style={{ marginTop: '1rem' }}>
         <h3>
-          {index + 1}　{comment.name}　{comment.createdAt.toLocaleString()}
+          {index + 1}　{comment.name}　
+          {format(new Date(comment.createdAt), 'yyyy/MM/dd')}
         </h3>
         <p style={{ margin: '0 1rem 1rem 1rem' }}>{comment.comment}</p>
       </div>

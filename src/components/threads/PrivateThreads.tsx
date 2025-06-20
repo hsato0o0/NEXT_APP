@@ -40,7 +40,7 @@ export default function PrivateThreads({ threads }: { threads: Threads }) {
               <option value="all">作成者を選択</option>
               {users.map((user) => {
                 return (
-                  <option id={user} value={user}>
+                  <option key={user} value={user}>
                     {user}
                   </option>
                 );
@@ -57,6 +57,7 @@ export default function PrivateThreads({ threads }: { threads: Threads }) {
 
               return (
                 <ThreadCard
+                  key={thread.id}
                   thread={thread}
                   commentNum={commentNum}
                   path="/user/threads/"

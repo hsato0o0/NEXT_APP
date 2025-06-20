@@ -1,17 +1,12 @@
 'use client';
 import { Threads } from '@/type/thread';
 import ThreadCard from './ThreadCard';
-import { useReducer } from 'react';
-
-const reducer = (
-  state: { filter: string },
-  { type }: { type: string }
-): { filter: string } => {
-  return { filter: type };
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { filter, RootState } from '@/store';
 
 export default function PublicThreads({ threads }: { threads: Threads }) {
-  const [rstate, dispatch] = useReducer(reducer, { filter: 'all' });
+  const rState = useSelector((state: RootState) => state.filterReducer.filter);
+  const dispatch = useDispatch();
   const users = Array.from(new Set(threads.map((thread) => thread.user.name)));
 
   return (
@@ -33,13 +28,13 @@ export default function PublicThreads({ threads }: { threads: Threads }) {
                 margin: '0 2rem 1rem 0',
               }}
               onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                dispatch({ type: e.target.value })
+                dispatch(filter(e.target.value))
               }
             >
               <option value="all">作成者を選択</option>
               {users.map((user) => {
                 return (
-                  <option id={user} value={user}>
+                  <option key={user} value={user}>
                     {user}
                   </option>
                 );
@@ -48,19 +43,18 @@ export default function PublicThreads({ threads }: { threads: Threads }) {
           </div>
           {threads
             .filter((thread) => {
-              if (rstate.filter === 'all') return true;
-              return thread.user.name === rstate.filter;
+              if (rState === 'all') return true;
+              return thread.user.name === rState;
             })
             .map((thread) => {
               const commentNum = thread.comments.length || 0;
               return (
-                <>
-                  <ThreadCard
-                    thread={thread}
-                    commentNum={commentNum}
-                    path="/threads/"
-                  />
-                </>
+                <ThreadCard
+                  key={thread.id}
+                  thread={thread}
+                  commentNum={commentNum}
+                  path="/threads/"
+                />
               );
             })}
         </div>

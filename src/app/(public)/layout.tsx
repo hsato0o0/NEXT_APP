@@ -1,4 +1,6 @@
 import PublicHeader from '@/components/layouts/PublicHeader';
+import StoreProvider from '@/store/StoreProvider';
+
 export default function PublicLayout({
   children,
 }: Readonly<{
@@ -7,7 +9,7 @@ export default function PublicLayout({
   return (
     <div>
       <PublicHeader />
-      {children}
+      <StoreProvider>{children}</StoreProvider>
     </div>
   );
 }

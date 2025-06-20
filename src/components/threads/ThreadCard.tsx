@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { format } from 'date-fns';
 
 export default function ThreadCard({
   thread,
@@ -41,7 +42,7 @@ export default function ThreadCard({
             コメント数：{commentNum}
           </div>
           <div style={{ marginRight: '1rem', fontSize: '9px' }}>
-            作成日：{thread.createdAt.toLocaleDateString()}
+            作成日：{format(new Date(thread.createdAt), 'yyyy/MM/dd')}
           </div>
           {/* <div style={{ fontSize: '9px' }}>作成者：{thread.user?.name}</div> */}
         </div>
